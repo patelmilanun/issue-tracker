@@ -10,15 +10,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var contentNode = document.getElementById('contents');
 
-var issues = [{
-    id: 1, status: 'Open', owner: 'Ravan',
-    created: new Date('2016-08-15'), effort: 5, completionDate: undefined,
-    title: 'Error in console when clicking Add'
-}, {
-    id: 2, status: 'Assigned', owner: 'Eddie', created: new Date('2016-08-16'), effort: 14, completionDate: new Date('2016-08-30'),
-    title: 'Missing bottom border on panel'
-}];
-
 var IssueList = function (_React$Component) {
     _inherits(IssueList, _React$Component);
 
@@ -37,11 +28,27 @@ var IssueList = function (_React$Component) {
     _createClass(IssueList, [{
         key: 'createIssue',
         value: function createIssue(newIssue) {
-            var newIssues = this.state.issues.slice();
-            newIssue.id = this.state.issues.length + 1;
-            newIssues.push(newIssue);
-            this.setState({
-                issues: newIssues
+            var _this2 = this;
+
+            fetch('/api/issues', {
+                method: "POST",
+                headers: { 'Content-Type': "application/json" },
+                body: JSON.stringify(newIssue)
+            }).then(function (response) {
+                if (response.ok) {
+                    response.json().then(function (updatedIssue) {
+                        updatedIssue.created = new Date(updatedIssue.created);
+                        if (updatedIssue.completionDate) updatedIssue.completionDate = new Date(updatedIssue.completionDate);
+                        var newIssues = _this2.state.issues.concat(updatedIssue);
+                        _this2.setState({ issues: newIssues });
+                    });
+                } else {
+                    response.json().then(function (error) {
+                        alert("Failed to add issue: " + error.message);
+                    });
+                }
+            }).catch(function (err) {
+                alert("Error in sending data to server: " + err.message);
             });
         }
     }, {
@@ -52,20 +59,24 @@ var IssueList = function (_React$Component) {
     }, {
         key: 'loadData',
         value: function loadData() {
-            var _this2 = this;
+            var _this3 = this;
 
-            setTimeout(function () {
-                _this2.setState({ issues: issues });
-            }, 500);
+            // setTimeout(() => {
+            //     this.setState({issues: issues})
+            // }, 500);
+            fetch('/api/issues').then(function (response) {
+                return response.json();
+            }).then(function (data) {
+                console.log("Total count of records: ", data._metaData.total_count);
+                data.records.forEach(function (issue) {
+                    issue.created = new Date(issue.created);
+                    if (issue.completionDate) issue.completionDate = new Date(issue.completionDate);
+                });
+                _this3.setState({ issues: data.records });
+            }).catch(function (err) {
+                return console.log(err);
+            });
         }
-
-        // createTestIssue() {
-        //     this.createIssue({
-        //         status: 'New', owner: 'Ritik', created: new Date(),
-        //         title: 'Completion date should be optional',
-        //     })
-        // }
-
     }, {
         key: 'render',
         value: function render() {
@@ -165,7 +176,7 @@ var IssueTable = function IssueTable(props) {
             props.issues.map(function (issue) {
                 return React.createElement(
                     IssueRow,
-                    { key: issue.id },
+                    { key: issue._id },
                     issue
                 );
             })
@@ -216,10 +227,10 @@ var IssueAdd = function (_React$Component3) {
     function IssueAdd() {
         _classCallCheck(this, IssueAdd);
 
-        var _this4 = _possibleConstructorReturn(this, (IssueAdd.__proto__ || Object.getPrototypeOf(IssueAdd)).call(this));
+        var _this5 = _possibleConstructorReturn(this, (IssueAdd.__proto__ || Object.getPrototypeOf(IssueAdd)).call(this));
 
-        _this4.handleSubmit = _this4.handleSubmit.bind(_this4);
-        return _this4;
+        _this5.handleSubmit = _this5.handleSubmit.bind(_this5);
+        return _this5;
     }
 
     _createClass(IssueAdd, [{
@@ -267,7 +278,7 @@ var IssueRow = function IssueRow(props) {
         React.createElement(
             'td',
             { style: borderedStyle },
-            props.children.id
+            props.children._id
         ),
         React.createElement(
             'td',
