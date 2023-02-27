@@ -1,6 +1,6 @@
 const express = require("express")
 const bodyParser = require('body-parser');
-const validateIssue = require('./issue')
+const { validateIssue } = require('./issue')
 
 const app = express();
 app.use(express.static('static'))
