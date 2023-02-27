@@ -1,4 +1,6 @@
 const contentNode = document.getElementById('contents');
+import IssueAdd from "./IssueAdd";
+
   class IssueList extends React.Component {
     constructor() {
         super();
@@ -147,35 +149,6 @@ const IssueTable = (props) => {
 //     }
 // }
 
-class IssueAdd extends React.Component {
-    constructor() {
-        super();
-        this.handleSubmit = this.handleSubmit.bind(this);
-    }
-    handleSubmit(event) {
-        event.preventDefault();
-        let form = document.forms.issueAdd;
-        this.props.createIssue({
-            owner: form.owner.value,
-            title: form.title.value,
-            status: 'New',
-            created: new Date(),
-        })
-
-        form.owner.value = "";
-        form.title.value = ""
-    }
-    render() {
-        return (
-            <form name="issueAdd" onSubmit={this.handleSubmit}>
-                <input type="text" name="owner" placeholder="Issue owner" />
-                <input type="text" name="title" placeholder="Issue title" />
-                <button type="submit">Add</button>
-            </form>
-            // <div>This is a placehoder for issue add</div>
-        )
-    }
-}
 
 const IssueRow = (props) => {
     const borderedStyle = {border: "1px solid silver", padding: 4};
