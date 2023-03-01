@@ -1,14 +1,20 @@
-const express = require("express")
-const bodyParser = require('body-parser');
-const { validateIssue } = require('./issue')
+// const express = require("express")
+// const bodyParser = require('body-parser');
+// const { validateIssue } = require('./issue')
 
+import express from 'express';
+import bodyParser from 'body-parser';
+import { MongoClient } from 'mongodb';
+import Issue from './issue.js';
+import SourceMapSupport from 'source-map-support'; 
+
+SourceMapSupport.install();
 const app = express();
 app.use(express.static('static'))
 app.use(bodyParser.json());
 
-
 //DATABASE 
-const { MongoClient } = require('mongodb');
+// const { MongoClient } = require('mongodb');
 const URI = 'mongodb://localhost:27017'
 const client = new MongoClient(URI, { useNewUrlParser: true, useUnifiedTopology: true });
 
@@ -46,7 +52,7 @@ app.post('/api/issues', (req, res) => {
     if (!newIssue.status)
         newIssue.status = "New";
     
-    const err = validateIssue(newIssue)
+    const err = Issue(newIssue)
     if (err) {
         res.status(422).json({message: `Invalid request: ${err}`});
         return;

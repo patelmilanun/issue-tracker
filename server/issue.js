@@ -1,5 +1,3 @@
-'use strict';
-
 const validIssueStatus = {
     New: true,
     Open: true,
@@ -32,6 +30,6 @@ const validIssueStatus = {
     return null;
   }
 
-module.exports = {
+export default {
     validateIssue: validateIssue
 }

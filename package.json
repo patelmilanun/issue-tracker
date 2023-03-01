@@ -3,11 +3,14 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "build": "webpack --mode production",
     "watch": "webpack-dev-server --hot --live-reload",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon -w server server/server.js"
+    "start": "nodemon -w server server/server.js",
+    "compile-server": "npx babel server --presets @babel/preset-env --out-dir dist --source-maps",
+    "watch-server": "npx babel server --presets @babel/preset-env --out-dir dist --source-maps --watch"
   },
   "keywords": [],
   "author": "",
@@ -17,9 +20,11 @@
     "express": "^4.18.2",
     "mongodb": "^5.1.0",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "source-map-support": "^0.5.21"
   },
   "devDependencies": {
+    "@babel/cli": "^7.21.0",
     "@babel/core": "^7.21.0",
     "@babel/preset-env": "^7.20.2",
     "@babel/preset-react": "^7.18.6",
