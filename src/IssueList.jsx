@@ -1,3 +1,5 @@
+import React from 'react'
+
 const IssueTable = (props) => {
     return (
         <table className="bordered-table">
