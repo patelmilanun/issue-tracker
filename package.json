@@ -5,8 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "webpack --mode production",
-    "compile": "babel src --presets react,es2015 --out-dir static",
-    "watch": "babel src --presets react,es2015 --out-dir static --watch",
+    "watch": "webpack --watch",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon -w server server/server.js"
   },
