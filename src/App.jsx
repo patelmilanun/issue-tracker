@@ -1,6 +1,5 @@
 const contentNode = document.getElementById('contents');
 import IssueAdd from "./IssueAdd.jsx";
-
   class IssueList extends React.Component {
     constructor() {
         super();
