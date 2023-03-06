@@ -3,6 +3,7 @@
 // const { validateIssue } = require('./issue')
 
 import express from 'express';
+import path from 'path';
 import bodyParser from 'body-parser';
 import { MongoClient } from 'mongodb';
 import Issue from './issue.js';
@@ -36,8 +37,12 @@ connect()
   .catch(console.error)
   // .finally(() => client.close())
 
+
+  // REST API ROUTEs
 app.get('/api/issues', (req, res) => {
-    db.collection('issues').find().toArray().then(issues => {
+    const filter = {};
+    if (req.query.status) filter.status = req.query.status;
+    db.collection('issues').find(filter).toArray().then(issues => {
       const metaData = { total_count: issues.length}
       res.json({_metaData: metaData, records: issues})
     }).catch(error => {
@@ -65,4 +70,8 @@ app.post('/api/issues', (req, res) => {
         console.log(error);
         res.status(500).json({message: `Internal server error: ${error}`})
       }) 
+})
+
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve('static/index.html'))
 })

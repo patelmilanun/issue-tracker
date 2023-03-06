@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom';
 
 const IssueTable = (props) => {
     return (
@@ -18,6 +19,7 @@ const IssueTable = (props) => {
             {props.issues.map(issue => {
                 return (
                     <IssueRow key={issue._id}>
+                    {/* <IssueRow key={4}> */}
                         {issue}
                     </IssueRow>
                 )
@@ -31,7 +33,8 @@ const IssueRow = (props) => {
     const borderedStyle = {border: "1px solid silver", padding: 4};
     return (
             <tr>
-            <td style={borderedStyle}>{props.children._id}</td>
+            {/* <td style={borderedStyle}>{props.children._id}</td> */}
+            <td style={borderedStyle}><Link to={`/issues/${props.children._id}`}>{props.children._id.substr(-4)} </Link></td>
             <td style={borderedStyle}>{props.children.status}</td>
             <td style={borderedStyle}>{props.children.owner}</td>
             <td style={borderedStyle}>{props.children.created.toDateString()}</td>

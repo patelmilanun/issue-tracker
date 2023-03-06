@@ -1,11 +1,11 @@
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
-import path from 'path'
+import path from 'path';
 
 const __dirname = path.dirname(new URL(import.meta.url).pathname);
 
 const config = {
   entry: [
-    './src/App.jsx'
+    './src/App.jsx',
   ],
   output: {
     path: path.resolve(__dirname, 'static'),
@@ -34,7 +34,8 @@ const config = {
       }
     },
   },
-  devtool: 'source-map'
+  devtool: 'source-map',
+  mode: 'development'
 }
 
 export default config;
