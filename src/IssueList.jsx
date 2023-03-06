@@ -107,7 +107,7 @@ export default class IssueList extends React.Component {
     render() {
         return (
             <div>
-                <h1>Issue tracker</h1>
+                {/* <h1>Issue tracker</h1> */}
                 <IssueFilter />
                 <hr />
                 <IssueTable issues={this.state.issues} />

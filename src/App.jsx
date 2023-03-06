@@ -35,10 +35,11 @@ const App = () => (
         <Route path="/issues" element={<IssueList />} />
         <Route path="/issues/:id" element={<IssueEdit />} />
         <Route path="*" element={<NoMatch />} />
+        <Route path="*/*/" element={<NoMatch />} />
       </Routes>
     </div>
     <div className="footer">
-      Made with love and confusion react router dom.
+      Made with love and confusion thanks to react router dom.
     </div>
   </div>
 );
