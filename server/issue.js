@@ -17,7 +17,7 @@ const issueFieldType = {
   title: 'required',
 };
 
-function validateIssue(issue) {
+export default function validateIssue(issue) {
   for (const field in issueFieldType) {
     const type = issueFieldType[field];
     if (!type) {
@@ -30,6 +30,6 @@ function validateIssue(issue) {
   return null;
 }
 
-export default {
-  validateIssue,
-};
+// export default {
+//   validateIssue,
+// };

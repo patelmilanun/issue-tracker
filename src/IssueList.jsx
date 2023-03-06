@@ -18,9 +18,9 @@ const IssueTable = (props) => {
         <tbody>
             {props.issues.map(issue => {
                 return (
-                    <IssueRow key={issue._id}>
+                    <IssueRow key={issue._id} issue={issue}>
                     {/* <IssueRow key={4}> */}
-                        {issue}
+                        {/* {issue} */}
                     </IssueRow>
                 )
             })}
@@ -30,17 +30,18 @@ const IssueTable = (props) => {
 }
 
 const IssueRow = (props) => {
+    const issue = props.issue
     const borderedStyle = {border: "1px solid silver", padding: 4};
     return (
             <tr>
             {/* <td style={borderedStyle}>{props.children._id}</td> */}
-            <td style={borderedStyle}><Link to={`/issues/${props.children._id}`}>{props.children._id.substr(-4)} </Link></td>
-            <td style={borderedStyle}>{props.children.status}</td>
-            <td style={borderedStyle}>{props.children.owner}</td>
-            <td style={borderedStyle}>{props.children.created.toDateString()}</td>
-            <td style={borderedStyle}>{props.children.effort}</td>
-            <td style={borderedStyle}>{props.children.completionDate? props.children.completionDate.toDateString() : ''}</td>
-            <td style={borderedStyle}>{props.children.title}</td>
+            <td style={borderedStyle}><Link to={`/issues/${issue._id}`}>{issue._id.substr(-4)} </Link></td>
+            <td style={borderedStyle}>{issue.status}</td>
+            <td style={borderedStyle}>{issue.owner}</td>
+            <td style={borderedStyle}>{issue.created.toDateString()}</td>
+            <td style={borderedStyle}>{issue.effort}</td>
+            <td style={borderedStyle}>{issue.completionDate? issue.completionDate.toDateString() : ''}</td>
+            <td style={borderedStyle}>{issue.title}</td>
         </tr>
     )
 }

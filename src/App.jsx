@@ -35,7 +35,6 @@ const App = () => (
         <Route path="/issues" element={<IssueList />} />
         <Route path="/issues/:id" element={<IssueEdit />} />
         <Route path="*" element={<NoMatch />} />
-        <Route path="*/*/" element={<NoMatch />} />
       </Routes>
     </div>
     <div className="footer">

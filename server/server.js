@@ -57,11 +57,13 @@ app.post('/api/issues', (req, res) => {
     if (!newIssue.status)
         newIssue.status = "New";
     
-    const err = Issue(newIssue)
-    if (err) {
-        res.status(422).json({message: `Invalid request: ${err}`});
-        return;
-    }
+
+    // THIS IS WHERE I AM CALLING THE ISSUE FUNCTION
+    // const err = Issue(newIssue)
+    // if (err) {
+    //     res.status(422).json({message: `Invalid request: ${err}`});
+    //     return;
+    // }
     db.collection('issues').insertOne(newIssue).then(result => 
       db.collection('issues').find({_id: result.insertedId}).limit(1).next()
       ).then(newIssue => {
